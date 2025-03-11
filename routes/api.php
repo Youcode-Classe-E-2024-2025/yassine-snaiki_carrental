@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,11 +28,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/cars/{id}', [CarController::class, 'destroy']);
     });
     Route::name('payment')->group(function () {
-        Route::post('/payments', [CarController::class, 'store']);
-        Route::get('/payments', [CarController::class, 'store']);
-        Route::get('/payments/{user}', [CarController::class, 'store']);
-        Route::get('/payments/{rental}', [CarController::class, 'store']);
-        Route::get('/payments/{payment}', [CarController::class, 'store']);
+        Route::post('/payments', [PaymentController::class, 'store']);
+        Route::get('/payments', [PaymentController::class, 'index']);
+        Route::get('/payments/rental/{rental}', [PaymentController::class, 'getByRental']);
+        Route::get('/payments/{payment}', [PaymentController::class, 'show']);
 
     });
 });
