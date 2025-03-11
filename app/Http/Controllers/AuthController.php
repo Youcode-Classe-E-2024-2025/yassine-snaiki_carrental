@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Hash;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -22,10 +21,8 @@ class AuthController extends Controller
          if(!$user || !Hash::check($request->password, $user->password)) {
             return response()->json(['error' => 'Invalid credentials'], 401);
         }
-
         $token = $user->createToken('carrental')->plainTextToken;
         return response()->json(['token' => $token,"user"=>$user]);
-
     }
     public function register(Request $request)
     {
@@ -42,13 +39,8 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
-        // Create and return a new token for the user
-        $token = $user->createToken($request->name)->plainTextToken;
-
-        return response()->json(['token' => $token], 201);
+        return response()->json([], 201);
     }
-
     public function logout(Request $request){
         $request->user()->tokens()->delete();
         return response()->json(['message' => 'Logged out successfully'], 200);
