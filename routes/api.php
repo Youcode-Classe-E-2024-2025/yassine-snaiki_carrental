@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\RentalController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/payments', [PaymentController::class, 'index']);
         Route::get('/payments/rental/{rental}', [PaymentController::class, 'getByRental']);
         Route::get('/payments/{payment}', [PaymentController::class, 'show']);
+
+    });
+    Route::name('rental')->group(function () {
+        Route::post('/rentals', [RentalController::class, 'store']);
+        Route::get('/rentals', [RentalController::class, 'index']);
+        Route::get('/rentals/{rental}', [RentalController::class, 'show']);
+        Route::get('/rentals/user/{user}', [RentalController::class, 'getByUser']);
+        Route::get('/rentals/car/{car}', [RentalController::class, 'getByCar']);
 
     });
 });

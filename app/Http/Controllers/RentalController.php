@@ -2,64 +2,50 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
+use App\Models\Payment;
 use App\Models\Rental;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RentalController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+        return response()->json(Rental::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'car_id' => 'required|exists:cars,id',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
+            'total_price' => 'required|numeric',
+        ]);
+        $rental = Rental::create($data);
+        return response()->json($rental);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Rental $rental)
     {
-        //
+        return response()->json($rental);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Rental $rental)
-    {
-        //
+    public function getByUser(User $user){
+        return response()->json($user->rentals);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Rental $rental)
-    {
-        //
+
+    public function getByCar(Car $car) {
+        return response()->json($car->rentals);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Rental $rental)
     {
-        //
+        return response()->json($rental->delete());
     }
 }
