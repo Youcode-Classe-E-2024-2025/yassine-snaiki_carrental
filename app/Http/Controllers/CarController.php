@@ -10,51 +10,56 @@ class CarController extends Controller
 
     public function index()
     {
-        //
+        return response()->json(car::all());
     }
 
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'brand' => 'required',
+            'model' => 'required',
+            'year' => 'required',
+            'price_per_day' => 'required',
+            'is_available' => 'required',
+        ]);
+        $car = car::create($data);
+        return response()->json($car);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(car $car)
+    public function show(Car $car)
     {
-        //
+        return response()->json($car);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(car $car)
+    public function update(Request $request, Car $car)
     {
-        //
+        $data = $request->validate([
+            'brand' => 'required',
+            'model' => 'required',
+            'year' => 'required',
+            'price_per_day' => 'required',
+            'is_available' => 'required',
+        ]);
+        $car->update($data);
+        return response()->json($car);
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, car $car)
+    public function patch(Request $request, Car $car)
     {
-        //
+        $data = $request->validate([
+            'brand' => '',
+            'model' => '',
+            'year' => '',
+            'price_per_day' => '',
+            'is_available' => '',
+        ]);
+        $car->update($data);
+        return response()->json($car);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(car $car)
     {
-        //
+        $car->delete();
+        return response()->json(['message' => 'Car deleted successfully']);
     }
 }

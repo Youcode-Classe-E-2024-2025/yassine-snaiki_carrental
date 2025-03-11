@@ -24,6 +24,7 @@ class AuthController extends Controller
         $token = $user->createToken('carrental')->plainTextToken;
         return response()->json(['token' => $token,"user"=>$user]);
     }
+
     public function register(Request $request)
     {
         // Validate the incoming request
@@ -39,7 +40,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        return response()->json([], 201);
+        return response()->json(['message','user was registered successfully'], 201);
     }
     public function logout(Request $request){
         $request->user()->tokens()->delete();
