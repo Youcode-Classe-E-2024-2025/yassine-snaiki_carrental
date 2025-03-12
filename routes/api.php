@@ -41,9 +41,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/rentals/{rental}', [RentalController::class, 'show']);
         Route::get('/rentals/user/{user}', [RentalController::class, 'getByUser']);
         Route::get('/rentals/car/{car}', [RentalController::class, 'getByCar']);
+        ;
+    });//payment-cancel/32
 
-    });
 });
+Route::get('/payment-cancel/{rental}', [RentalController::class, 'cancel']);
+Route::get('/payment-success/{rental}', [RentalController::class, 'success']);
+
+
+
 
 Route::name('car')->group(function () {
 Route::get('/cars', [CarController::class, 'index']);
