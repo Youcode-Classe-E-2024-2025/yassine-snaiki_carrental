@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
+Route::get('/search/cars', [CarController::class, 'search']);
 Route::name('auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
@@ -54,4 +54,5 @@ Route::get('/payment-success/{rental}', [RentalController::class, 'success']);
 Route::name('car')->group(function () {
 Route::get('/cars', [CarController::class, 'index']);
 Route::get('/cars/{car}', [CarController::class, 'show']);
+
 });
